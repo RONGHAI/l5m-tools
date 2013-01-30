@@ -17,10 +17,11 @@ Jeweler::Tasks.new do |gem|
   gem.name = "l5m-tools"
   gem.homepage = "http://github.com/RONGHAI/l5m-tools"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{A tool set for Lake5Media and QingheTech developer }
+  gem.description = %Q{A tool set for Lake5Media and QingheTech developer}
   gem.email = "ronghai.wei@outlook.com"
-  gem.authors = ["Ronghai"]
+  #gem.platform = Gem::Platform::Win32
+  gem.authors = ["RONGHAI"]
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
@@ -32,13 +33,13 @@ Rake::TestTask.new(:test) do |test|
   test.verbose = true
 end
 
-require 'rcov/rcovtask'
-Rcov::RcovTask.new do |test|
-  test.libs << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
-  test.rcov_opts << '--exclude "gems/*"'
-end
+#require 'rcov/rcovtask'
+#Rcov::RcovTask.new do |test|
+#  test.libs << 'test'
+#  test.pattern = 'test/**/test_*.rb'
+#  test.verbose = true
+#  test.rcov_opts << '--exclude "gems/*"'
+#end
 
 task :default => :test
 
