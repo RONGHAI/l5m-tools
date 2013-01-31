@@ -104,7 +104,7 @@ public class !REPLACE_ME_FILE!ServicerImpl extends BaseServicerParaBean.Abstract
         this.servicerParamBean.initTabbedPanel("SOURCE"); 
         
           
-        
+        /*
          String[] columns = new String[]{"COLUMNS"};  
          //decimal
         this.servicerParamBean.setReportDecimalControlList(GenerateTagUtil.initDecimal(columns, new int[]{3,3,0,0,0,0}), PANEL.REPORT.panelIndex()); 
@@ -119,6 +119,7 @@ public class !REPLACE_ME_FILE!ServicerImpl extends BaseServicerParaBean.Abstract
         
         //sort
         this.servicerParamBean.setSortingKeysModuleStateBean(GenerateTagUtil.initSortKeyModule(columns, "sortKey", new int[]{0}, new boolean[]{true}), PANEL.REPORT.panelIndex());
+        */
      } 
 
      

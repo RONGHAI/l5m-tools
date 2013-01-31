@@ -307,8 +307,14 @@ if(AAUtils.isAjaxRequest(request)){
                         <table style="font-size:11px;">
                             <tr> 
                              <td id="sortingTD" style="text-align:left;white-space:nowrap;"> 
-                                    <c:if test="${!empty worker.servicer.sortingKeysModuleStateBean}">                       
-                                        <l5m:sortingKeysModule2 style="${styleLowerCase}"   moduleTitle="Sort By"       sortingKeysModuleStateBean="${worker.servicer.sortingKeysModuleStateBean}"  id="${worker.servicer.sortingKeysModuleStateBean.id}"/>
+                                    <c:if test="${!empty paraBean.sortWrappers[paraBean.panelIndex]}">     
+                                         <c:forEach var="sortWrapper" items="${paraBean.sortWrappers}">                                            
+                                            <c:if test="${!empty sortWrapper.sortingKeysModuleStateBean}">
+                                                <l5m:sortingKeysModule2 style="${styleLowerCase}"   moduleTitle="Sort By"     
+                                            sortingKeysModuleStateBean="${sortWrapper.sortingKeysModuleStateBean}"  
+                                            id="${sortWrapper.sortingKeysModuleStateBean.id}"/>                                            
+                                            </c:if>                                         
+                                         </c:forEach> 
                                     </c:if>
                               </td>
                             </tr>
@@ -343,26 +349,30 @@ if(AAUtils.isAjaxRequest(request)){
                                 <table>
                                     <tr>
                                     <td style="text-align:left;white-space:nowrap;" valign="top">  
-                                        <c:if test="${!empty worker.servicer.columnsMap}">
-                                          <l5m:multipleSelect
+                                        <c:if test="${!empty paraBean.displayWrappers[paraBean.panelIndex]}">     
+                                         <c:forEach var="displayWrapper" items="${paraBean.displayWrappers}">                                            
+                                            <c:if test="${!empty displayWrapper.columnsMap}">
+                                                      <l5m:multipleSelect
                                                  id="multipleColumnsController"
                                                  style="${styleLowerCase}"
                                                  title="<b>Columns</b>"
-                                                 sourceValues="${worker.servicer.columnsMap}"
-                                                 selectedValues="${worker.servicer.selectedColumns }"
-                                                 onChange=""
-                                                 displayMode="2"
-                                                 useSortBy="true"
-                                                 sortBy="1"
-                                                 sortField="2"
-                                                 selectedLabel="Select"
-                                                 sourceLabel="Source"
-                                                 sourceWidth="200"
-                                                 destinationWidth="200"
-                                                 sourceSize="5"
-                                                 destinationSize="5"
-                                            /> 
-                                        </c:if>   
+                                                         sourceValues="${displayWrapper.columnsMap}"
+                                                         selectedValues="${displayWrapper.selectedColumns }"
+                                                         onChange=""
+                                                         displayMode="2"
+                                                         useSortBy="true"
+                                                         sortBy="1"
+                                                         sortField="2"
+                                                         selectedLabel="Select"
+                                                         sourceLabel="Source"
+                                                         sourceWidth="200"
+                                                         destinationWidth="200"
+                                                         sourceSize="5"
+                                                         destinationSize="5"
+                                                    />                                   
+                                            </c:if>                                         
+                                         </c:forEach> 
+                                    </c:if>   
                                  </td>
                                  </tr> 
                                 </table>

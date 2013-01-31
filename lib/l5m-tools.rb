@@ -1,6 +1,6 @@
 require 'l5m-tools/l5m-tools-module'
 require 'l5m-tools/string'
-
+require 'l5m-tools/svn'
 
 module L5MTools
     class Application
