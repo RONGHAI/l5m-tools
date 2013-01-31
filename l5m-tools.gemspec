@@ -32,6 +32,7 @@ Gem::Specification.new do |s|
     "bin/set_env.sh",
     "bin/svn.tool",
     "info",
+    "l5m-tools.gemspec",
     "lib/l5m-tools.rb",
     "lib/l5m-tools/application.rb",
     "lib/l5m-tools/env.rb",
