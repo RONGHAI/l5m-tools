@@ -1,3 +1,4 @@
+#!/bin/sh
 alias svn.log='svn.tool log'
 alias svn.status='svn.tool status'
 alias svn.update='svn.tool update'
