@@ -310,7 +310,7 @@ if(AAUtils.isAjaxRequest(request)){
                             <tr> 
                              <td id="sortingTD" style="text-align:left;white-space:nowrap;"> 
                                    <c:if test="${!empty paraBean.sortWrappers[paraBean.panelIndex]}">     
-                                         <c:forEach var="sortWrapper" items="${paraBean.sortWrappers}">                                            
+                                         <c:forEach var="sortWrapper" items="${paraBean.sortWrappers[paraBean.panelIndex]}">                                            
                                             <c:if test="${!empty sortWrapper.sortingKeysModuleStateBean}">
                                                 <l5m:sortingKeysModule2 style="${styleLowerCase}"   moduleTitle="Sort By"     
                                             sortingKeysModuleStateBean="${sortWrapper.sortingKeysModuleStateBean}"  
@@ -352,26 +352,26 @@ if(AAUtils.isAjaxRequest(request)){
                                     <tr>
                                     <td style="text-align:left;white-space:nowrap;" valign="top">  
                                         <c:if test="${!empty paraBean.displayWrappers[paraBean.panelIndex]}">     
-                                         <c:forEach var="displayWrapper" items="${paraBean.displayWrappers}">                                            
+                                         <c:forEach var="displayWrapper" items="${paraBean.displayWrappers[paraBean.panelIndex]}">                                            
                                             <c:if test="${!empty displayWrapper.columnsMap}">
                                                       <l5m:multipleSelect
-                                                 id="multipleColumnsController"
+                                                 id="${displayWrapper.id}"
                                                  style="${styleLowerCase}"
-                                                 title="<b>Columns</b>"
-                                                         sourceValues="${displayWrapper.columnsMap}"
-                                                         selectedValues="${displayWrapper.selectedColumns }"
-                                                         onChange=""
-                                                         displayMode="2"
-                                                         useSortBy="true"
-                                                         sortBy="1"
-                                                         sortField="2"
-                                                         selectedLabel="Select"
-                                                         sourceLabel="Source"
-                                                         sourceWidth="200"
-                                                         destinationWidth="200"
-                                                         sourceSize="5"
-                                                         destinationSize="5"
-                                                    />                                   
+                                                 title="${displayWrapper.title}"
+                                                 sourceValues="${displayWrapper.columnsMap}"
+                                                 selectedValues="${displayWrapper.selectedColumns }"
+                                                 onChange=""
+                                                 displayMode="2"
+                                                 useSortBy="true"
+                                                 sortBy="1"
+                                                 sortField="2"
+                                                 selectedLabel="Select"
+                                                 sourceLabel="${displayWrapper.title}"
+                                                 sourceWidth="200"
+                                                 destinationWidth="200"
+                                                 sourceSize="5"
+                                                 destinationSize="5"
+                                            />                                       
                                             </c:if>                                         
                                          </c:forEach> 
                                     </c:if>

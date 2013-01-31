@@ -194,10 +194,10 @@ public class !REPLACE_ME_FILE!ServicerImpl extends BaseServicerParaBean.Abstract
         if( panelIndexes == null || panelIndexes .length == 0){
             panelIndexes = new int[]{this.getPanelIndex() } ;
         }
-        for( int p : panelIndexes){
+        /*for( int p : panelIndexes){
             this.servicerParamBean.sort (p);     
-        }
-
+        }*/
+         this.servicerParamBean.parseSort(panelIndexes);
         //use SortBeanListUtil to sort bean list.
         // Generelly application has two different data struct.  bean list or dataTable. 
         // every application can convert to bean list or dataTable.
