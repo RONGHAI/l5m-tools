@@ -10,7 +10,7 @@ module L5MTools
             application = ask("","Please input application name") 
             use_base_worker = ask("true","Use AbstractBaseWorker?").to_boolean
             old_make_app(package, application, use_base_worker, &block)
-        end        
+        end
         alias :make :make_app
         alias :dup :duplicate_app        
         def run(*args, &block)

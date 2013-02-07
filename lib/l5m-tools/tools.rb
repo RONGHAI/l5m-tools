@@ -1,6 +1,7 @@
 module L5MTools
     module Tools
-        def send_mail to, subject="", body="" 
+        def send_mail to, subject="", body=""
+            require 'win32ole'
             outlook = WIN32OLE.new('Outlook.Application') 
             mapi = outlook.GetNameSpace('MAPI')
             message = outlook.CreateItem(0) 
@@ -32,7 +33,7 @@ module L5MTools
             replace(to, replacements)
         end
         def change_directory(dir, &operation)
-            return Dir::chdir(dir, &operation) if File.exists?dir
+            return Dir::chdir(dir, &operation) if File.exists? dir
         end        
         def ask(default_answer, *question_lines)
             puts question_lines
@@ -55,6 +56,12 @@ module L5MTools
             to = to_file(file, replacements)
             yield to if block_given?
             copy_silently(file, to, replacements)           
+        end
+        
+        
+        def user_home
+            require 'etc'
+            Etc.getpwuid.dir
         end
         
         #module_function :send_mail, :replace, :copy_silently, :change_directory, :ask    

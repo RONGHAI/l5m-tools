@@ -1,0 +1,21 @@
+---
+customtags:
+- M      com\l5m\customtags\tags\servlets\ContextInitListener.java
+qhtcommon:
+- M      com\l5m\common\engine\DbHandler.java
+- M      com\l5m\common\bean\NavigationBean.java
+- M      com\l5m\common\bean\PackageFileBean.java
+- M      com\l5m\common\util\BASE64Encoder.java
+- M      com\l5m\common\util\AppLog.java
+common:
+- "?      javascript\\timespan.js"
+- "?      javascript\\prototypeV7.js"
+- "?      javascript\\timespanlite.js"
+- "?      javascript\\timespanweekly.js"
+- D      javascript\prototype.js
+- M      jsp\TimeSpanNew.jsp
+- M      com\l5m\common\engine\DbHandler.java
+- M      com\l5m\common\l5m_util\module\DemoModule.java
+- M      com\l5m\common\util\NavigationAccessUtil.java
+- "?      com\\l5m\\common\\util\\view"
+- "?      com\\l5m\\common\\util\\db"
