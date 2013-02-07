@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "l5m-tools"
-  s.version = "0.0.2.pre"
+  s.version = "0.0.2.beta"
 
   s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
   s.authors = ["RONGHAI"]
-  s.date = "2013-02-05"
+  s.date = "2013-02-07"
   s.description = "A tool set for Lake5Media and QingheTech developer"
   s.email = "ronghai.wei@outlook.com"
   s.executables = ["duplicate-app", "l5m", "make-app", "set_env.sh", "svn.tool"]
@@ -35,7 +35,9 @@ Gem::Specification.new do |s|
     "l5m-tools.gemspec",
     "lib/l5m-tools.rb",
     "lib/l5m-tools/application.rb",
+    "lib/l5m-tools/array.rb",
     "lib/l5m-tools/env.rb",
+    "lib/l5m-tools/ignore/svn_ingore.yaml",
     "lib/l5m-tools/l5m-tools-module.rb",
     "lib/l5m-tools/string.rb",
     "lib/l5m-tools/svn.rb",
@@ -65,20 +67,17 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<rdoc>, ["~> 3.12"])
       s.add_development_dependency(%q<bundler>, ["~> 1.2.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.8.4"])
-      s.add_development_dependency(%q<etc>, [">= 0"])
     else
       s.add_dependency(%q<shoulda>, [">= 0"])
       s.add_dependency(%q<rdoc>, ["~> 3.12"])
       s.add_dependency(%q<bundler>, ["~> 1.2.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.8.4"])
-      s.add_dependency(%q<etc>, [">= 0"])
     end
   else
     s.add_dependency(%q<shoulda>, [">= 0"])
     s.add_dependency(%q<rdoc>, ["~> 3.12"])
     s.add_dependency(%q<bundler>, ["~> 1.2.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.8.4"])
-    s.add_dependency(%q<etc>, [">= 0"])
   end
 end
 
