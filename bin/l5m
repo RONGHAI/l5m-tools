@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require 'l5m-tools'
 if ARGV[0] == 'svn'
-    L5MTools.svn.run(*ARGV) 
+    L5MTools.svn.run(*ARGV){|log| puts log} 
 else
     L5MTools.application.run(*ARGV) 
 end

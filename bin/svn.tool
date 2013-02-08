@@ -1,3 +1,3 @@
 #!/usr/bin/env ruby
 require 'l5m-tools'
-L5MTools.svn.run(*ARGV)
+L5MTools.svn.run(*ARGV){|log| puts log}
