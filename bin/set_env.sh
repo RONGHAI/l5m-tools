@@ -9,7 +9,7 @@ function update.28(){
 }
 export WEBAPPS='$CATALINA_HOME/webapps' 
 function sync.package(){
-    svn.tool.rb status  $1 | awk '{print $2}' | sed '/^$/d' | sed -e 's/\\/\//g' | while read fi ; do echo $fi && cp $WORKSPACE/$1/src/$fi $WORKSPACE/$2/src/$fi; done
+    svn.tool status  $1 | awk '{print $2}' | sed '/^$/d' | sed -e 's/\\/\//g' | while read fi ; do echo $fi && cp $WORKSPACE/$1/src/$fi $WORKSPACE/$2/src/$fi; done
 }
 for i in $CATALINA_HOME/common/lib/ $CATALINA_HOME/common/i18n/
 do
