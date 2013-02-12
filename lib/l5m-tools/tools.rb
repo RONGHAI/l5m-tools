@@ -28,7 +28,8 @@ module L5MTools
             File.open(in_file, 'w') { | io | io.puts(contents) } 
             return changed
         end
-        def copy_silently(from, to, replacements)
+        def copy_with_replace(from, to, replacements)
+            FileUtils.mkdir_p File.dirname(to)
             copy(from, to)
             replace(to, replacements)
         end
@@ -55,13 +56,13 @@ module L5MTools
         def duplicate_and_replace(file, replacements = {})
             to = to_file(file, replacements)
             yield to if block_given?
-            copy_silently(file, to, replacements)           
+            copy_with_replace(file, to, replacements)           
         end
         
+        alias :copy_silently :copy_with_replace
         
         def user_home
-            require 'etc'
-            Etc.getpwuid.dir
+            File.expand_path('~')
         end
         
         #module_function :send_mail, :replace, :copy_silently, :change_directory, :ask    

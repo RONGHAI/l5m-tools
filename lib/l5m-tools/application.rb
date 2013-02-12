@@ -21,15 +21,15 @@ module L5MTools
               '!REPLACE_ME_FILE!' => application,
               '!REPLACE_STYLE!' => package
             }  
-            copy_silently(  use_base_worker  ? (TEMPLATE_DIR+"TemplateBaseAbstractWorker.java") :    (TEMPLATE_DIR+"TemplateWorker.java") , 
+            copy_with_replace(  use_base_worker  ? (TEMPLATE_DIR+"TemplateBaseAbstractWorker.java") :    (TEMPLATE_DIR+"TemplateWorker.java") , 
                 "#{WORKSPACE}/#{package}/src/com/l5m/#{package}/engine/worker/#{application}Worker.java"  , replacements ) 
-            copy_silently( TEMPLATE_DIR+"TemplateServicerImpl.java" , 
+            copy_with_replace( TEMPLATE_DIR+"TemplateServicerImpl.java" , 
                     "#{WORKSPACE}/#{package}/src/com/l5m/#{package}/engine/servicer/#{application}ServicerImpl.java"  , replacements ) 
             if File.exist?( TEMPLATE_DIR+"#{package}.jsp")
-                copy_silently( TEMPLATE_DIR+"#{package}.jsp" ,
+                copy_with_replace( TEMPLATE_DIR+"#{package}.jsp" ,
                     "#{WORKSPACE}/#{package}/src/jsp/#{application}.jsp" , replacements ) 
             else 
-                copy_silently( TEMPLATE_DIR+"Template.jsp" , 
+                copy_with_replace( TEMPLATE_DIR+"Template.jsp" , 
                     "#{WORKSPACE}/#{package}/src/jsp/#{application}.jsp" , replacements ) 
             end            
             block.call(Time.now, package, application, use_base_worker) if block_given?

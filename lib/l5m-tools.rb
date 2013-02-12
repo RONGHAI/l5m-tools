@@ -3,6 +3,13 @@ require 'l5m-tools/string'
 require 'l5m-tools/svn'
 
 module L5MTools
+    module Tools
+        alias :copy_with_replace_without_puts :copy_with_replace
+        def copy_with_replace(from, to, replacements)
+            puts to            
+            copy_with_replace_without_puts(from, to, replacements)
+        end
+    end
     class Application
         alias old_make_app make_app        
         def make_app(*args, &block)
