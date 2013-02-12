@@ -95,7 +95,7 @@ module L5MTools
             cmd = args.shift if 'svn' == cmd
             args , svn_args = args[0..(args.index '--')], args[((args.index '--')+1)..-1] if args.index '--'
            
-            options = {username:(args.option! '--user' || SVN_USER), reverse:(args.delete('-r')), date: (args.option!('--date')), mail:(args.delete('-e') || args.delete('--email')) }          
+            options = {username:((args.option! '--user') || SVN_USER), reverse:(args.delete('-r')), date: (args.option!('--date')), mail:(args.delete('-e') || args.delete('--email')) }          
             options[:sendto] = args.option!('-s') || SENDER_EMAIL
             options[:title]  = args.option!('--title') || "svn #{cmd} @#{Time.now.strftime("%F %T")}" 
             
