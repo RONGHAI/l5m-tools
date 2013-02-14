@@ -65,14 +65,20 @@ public class !REPLACE_ME_FILE!Worker extends AbstractWorker{
             return label;
         }
     }
-    public static final String JSP_TOGO_PERIX = "!REPLACE_ME_FILE!";  /*worker name w/o "Worker"*/
+    public static final String JSP_TOGO_PERIX ;  /*worker name w/o "Worker"*/
+    public static final String packageLowerCase;
+    
+    static{
+        String clazzNames[] =  Thread.currentThread().getStackTrace()[2].getClassName().split("\\.");     
+        JSP_TOGO_PERIX = clazzNames[5].substring(0, clazzNames[5].length - "Worker".length);
+        packageLowerCase = clazzNames[2];
+    }    
     public static final String JSP_TOGO = JSP_TOGO_PERIX+".jsp"; 
     public static final String WORKER_NAME = JSP_TOGO_PERIX+"Worker"; 
     
      
     
     public static final String FORM_NAME = JSP_TOGO_PERIX+"Form";
-    public static final String packageLowerCase = "!REPLACE_STYLE!";
  
     public static final String packageUpperCase =  packageLowerCase.toUpperCase();
      
@@ -413,7 +419,7 @@ public class !REPLACE_ME_FILE!Worker extends AbstractWorker{
         return url.toString();
     }
 
-    /**
+    /*
      * @return the wORKER_NAME
      */
     public String getWORKER_NAME() {
