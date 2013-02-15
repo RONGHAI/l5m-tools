@@ -7,11 +7,15 @@ module L5MTools
         require 'l5m-tools/tools'
         include Tools        
         def duplicate_app(*args)
+            delete = args.delete('-d')
             replacements  = {args[1] => args[2]}
             File.open(args[0], "r") do |infile|
                 while (line = infile.gets)
-                    line = line.chomp.strip            
-                    duplicate_and_replace( line.chomp ,  replacements ) if line.length > 0 && line[0] != '#'
+                    line = line.chomp.strip
+                    if line.length > 0 && line[0] != '#'
+                        duplicate_and_replace( line.chomp ,  replacements ) 
+                        FileUtils.rm(line, :force => true) if delete
+                    end 
                 end
             end
         end        
