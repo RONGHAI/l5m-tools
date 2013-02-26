@@ -20,7 +20,7 @@ public class !REPLACE_ME_FILE!Worker extends AbstractBaseWorker {
     public static final String packageLowerCase;    
     static{
         String clazzNames[] =  Thread.currentThread().getStackTrace()[2].getClassName().split("\\.");     
-        JSP_TOGO_PERIX = clazzNames[5].substring(0, clazzNames[5].length - "Worker".length);
+        JSP_TOGO_PERIX = clazzNames[5].substring(0, clazzNames[5].length() - "Worker".length());
         packageLowerCase = clazzNames[2];
     }
     public static final String JSP_TOGO = JSP_TOGO_PERIX + ".jsp";
