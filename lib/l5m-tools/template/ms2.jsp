@@ -56,7 +56,7 @@ if(AAUtils.isAjaxRequest(request)){
         <script type="text/javascript"><!--
             ajaxAnywhere.formName = "${worker.FORM_NAME}";   
             var QHTAjaxObject = new QHTAjaxUtil('<%=request.getContextPath()%>/servlet/L5MOnline/<%=AppConfig.getProperty("appL5MOnline")%>','${worker.url}','<%=AppConfig.getProperty("butOption")%>'); 
-            var pageAction = new PageAction(window, "${worker.FORM_NAME}", "<%=AppConfig.getProperty("butOption")%>", "panelIndex" , "displayStage" , '<%=request.getContextPath()%>/servlet/L5MOnline?work=ForwardToJspWorker&jsp=IntermediaRefreshN&irStatus=firstTime&showLocalForm=N')
+            var pageAction = new PageAction(window, "${worker.FORM_NAME}", "<%=AppConfig.getProperty("butOption")%>", "panelIndex" , "displayStage" , '<%=request.getContextPath()%>/servlet/L5MOnline?work=ForwardToJspWorker&jsp=IntermediaRefreshN2&irStatus=firstTime&showLocalForm=N')
 
             AjaxAnywhere.prototype.getGlobalScriptsDeclarationsList = function(script) {
                 return ["paginatorDetail_pageChanged"];
