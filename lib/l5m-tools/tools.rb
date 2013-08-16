@@ -30,7 +30,7 @@ module L5MTools
         end
         def copy_with_replace(from, to, replacements)
             FileUtils.mkdir_p File.dirname(to)
-            copy(from, to)
+            copy(from, to) unless from == to
             replace(to, replacements)
         end
         def change_directory(dir, &operation)
@@ -56,7 +56,7 @@ module L5MTools
         def duplicate_and_replace(file, replacements = {})
             to = to_file(file, replacements)
             yield to if block_given?
-            copy_with_replace(file, to, replacements)           
+            [copy_with_replace(file, to, replacements), to]
         end
         
         alias :copy_silently :copy_with_replace

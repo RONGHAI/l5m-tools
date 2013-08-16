@@ -13,8 +13,9 @@ module L5MTools
                 while (line = infile.gets)
                     line = line.chomp.strip
                     if line.length > 0 && line[0] != '#'
-                        duplicate_and_replace( line.chomp ,  replacements ) 
-                        FileUtils.rm(line, :force => true) if delete
+                        #duplicate_and_replace( line.chomp ,  replacements ) 
+                        #FileUtils.rm(line, :force => true) if delete
+                        FileUtils.rm(line, :force => true) if duplicate_and_replace( line.chomp ,  replacements )[1] != line && delete
                     end 
                 end
             end
