@@ -43,7 +43,7 @@ if(AAUtils.isAjaxRequest(request)){
     
 
 
-    <l5m:jspHead useIE7Compatible="true"  title="${worker.APP_NAME}" formName="${formName}" packageName="${packageLowerCase}" planingCss="L001;L004">
+    <l5m:jspHead useIE7Compatible="true"  includeJQuery='true' title="${worker.APP_NAME}" formName="${formName}" packageName="${packageLowerCase}" planingCss="L001;L004">
         
         <!-- add additinal js css in here -->
         
@@ -313,27 +313,17 @@ if(AAUtils.isAjaxRequest(request)){
     
         
         
+         <l5m:LoadResources/>
+        
     </l5m:jspHead> 
     
-    <body bgcolor="#ffffff" marginwidth="0" marginheight="0" leftmargin="0" topmargin="0">
-        <div id="mainmessage" align="center">
-             <span style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; font-weight: bold">
-                 <br/>
-                 <br/>
-                 <br/>
-                 <br/>
-                 Please wait ...<br />
-             </span>
-        </div>
-        <div id="mainpart" style="display: none;">
-            <form class="formnomargin" name="${worker.FORM_NAME}" id="${worker.FORM_NAME}" action="<%=AppConfig.getProperty("appL5MOnline")%>" method="post">
-                <input type="hidden" name="<%=AppConfig.getProperty("requestAction")%>"  id="<%=AppConfig.getProperty("requestAction")%>"  value="${worker.WORKER_NAME}" />
-                <input type="hidden" name="<%=AppConfig.getProperty("srcPage")%>" id="<%=AppConfig.getProperty("srcPage")%>" value="${worker.jspGoto}" />
-                <input type="hidden" name="<%=AppConfig.getProperty("butOption")%>" id="<%=AppConfig.getProperty("butOption")%>"  value="" /> 
-                <input type="hidden" name="1stnavbar" id="1stnavbar" value="<%=request.getParameter("1stnavbar")%>" /> 
-                <input type="hidden" name="2ndnavbar"  id="2ndnavbar" value="<%=request.getParameter("2ndnavbar")%>" /> 
-                <input type="hidden" name="<%=SessionConstants.NAV_COMPANY_ID%>" id="<%=SessionConstants.NAV_COMPANY_ID%>" value="${worker.servicer.companyId}" /> 
-                <input type="hidden" name="<%=TTVConstants.MODULE_INDEX%>" id="<%=TTVConstants.MODULE_INDEX%>" value="" />  
+    <l5m:jspBody 
+        formName="${worker.FORM_NAME}"  packageName="${packageLowerCase}" 	style="${styleLowerCase}"
+        worker="${worker.WORKER_NAME}"  action=""  jspGoto="${worker.jspGoto}"
+        groupId="${servicer.groupId}"  	companyId="${servicer.companyId}"
+        userId="${servicer.userId}"
+        dbHandler="${servicer.dbHandler}"  includeJQuery="true"
+    >
                   <aa:zone name="alwaysRefreshZone"> 
                     <input type="hidden" name="panelIndex" id="name" value="${paraBean.panelIndex}"/> 
                     <input type="hidden" name="displayStage" id="displayStage" value="${paraBean.displayStage}"/>  
@@ -358,31 +348,7 @@ if(AAUtils.isAjaxRequest(request)){
                              incSelectedSet = "${paraBean.selectedDisplayBy}"
                              incSingleSelected = "${paraBean.selectedSortBy}"
                          /> 
-                </aa:zone>
-                
-                <script type="text/javascript">
-                <!--
-                function loadjscssfile(filename,filetype){
-
-                   if (filetype=="js"){ //if filename is a external JavaScript file
-                       if($$('script[src="'+filename+'"]').length  >= 1) return;
-                       var fileref=document.createElement('script')
-                       fileref.setAttribute("type","text/javascript")
-                       fileref.setAttribute("src", filename)
-                   }
-                   else if (filetype=="css"){ //if filename is an external CSS file
-                       if($$('link[href="'+filename+'"]').length  >= 1) return;
-                       var fileref=document.createElement("link")
-                       fileref.setAttribute("rel", "stylesheet")
-                       fileref.setAttribute("type", "text/css")
-                       fileref.setAttribute("href", filename)
-                   }
-                   if (typeof fileref!="undefined"){
-                       document.getElementsByTagName("head")[0].appendChild(fileref)
-                   }
-                }
-                //-->
-                </script>
+                </aa:zone> 
                 
                 <div id="topPanel" style="display:${paraBean.selectionPanelStatusOpen?'inline':'none'}" >
                 <!--source panel begin-->
@@ -468,7 +434,7 @@ if(AAUtils.isAjaxRequest(request)){
                             <td align="left" valign="top" width="99%">
                                 <aa:zone name="result">
                                     <input type="hidden" name="panelIndex" id="name" value="${baseServicerParameterBean.panelIndex}"/> 
-                                    <input type="hidden" name="displayStage" id="displayStage" value="${worker.servicer.displayStage}"/> 
+                                    <input type="hidden" name="displayStage" id="displayStage" value="${true}"/> 
                                     <c:set var="PANEL" value="${worker.PANEL}"/>
                                     <table id="sectable" border="0" cellpadding="0" cellspacing="0" width="100%" height="26"> 
                                         <tbody>
@@ -484,7 +450,7 @@ if(AAUtils.isAjaxRequest(request)){
                                                             </td >  
                                                         </c:if>
                                                         <c:if test="${!(panelIndex.index ==worker.dataAvailability || panelIndex.index ==worker.help)}">
-                                                            <td   width="145px"  style=' ${worker.servicer.panelIndex == panelIndex.index || !worker.servicer.displayStage ?"cursor: none" : ""} ; white-space:nowrap; ${worker.servicer.panelIndex == panelIndex.index || worker.servicer.displayStage ?"font-weight: bold" : ""} ; font-size:11px; border-top-width:0px;${panelIndex.first?"border-left-width:0px":""}'  nowrap id="displayBy_${panelIndex.index }" onclick="${baseServicerParameterBean.panelIndex== panelIndex.index ? '':(worker.servicer.displayStage? jsChangePanel:'')}" class="${worker.servicer.panelIndex== panelIndex.index? 'sec2' :worker.servicer.displayStage?'sec1':'sec1'}" >
+                                                            <td   width="145px"  style=' ${worker.servicer.panelIndex == panelIndex.index || !true ?"cursor: none" : ""} ; white-space:nowrap; ${worker.servicer.panelIndex == panelIndex.index || true ?"font-weight: bold" : ""} ; font-size:11px; border-top-width:0px;${panelIndex.first?"border-left-width:0px":""}'  nowrap id="displayBy_${panelIndex.index }" onclick="${baseServicerParameterBean.panelIndex== panelIndex.index ? '':(true? jsChangePanel:'')}" class="${worker.servicer.panelIndex== panelIndex.index? 'sec2' :true?'sec1':'sec1'}" >
                                                                 ${panel.label }  
                                                             </td >   
                                                         </c:if>
@@ -504,7 +470,7 @@ if(AAUtils.isAjaxRequest(request)){
                                         <td  nowrap="nowrap"  height="40px" style="padding-left:5px;" >     
                                         </td>
                                         
-                                        <td  nowrap="nowrap"  height="40px" style="text-align:right;">         
+                                        <td  nowrap="nowrap"  height="40px" style="text-align:right; float:right ;padding-right:10px;">	         
                                             <c:if test="${baseServicerParameterBean.panelIndex !=worker.help && baseServicerParameterBean.panelIndex !=worker.dataAvailability}" > 
                                                  ${worker.renderPaginatorHTML} 
                                            </c:if> 
@@ -691,27 +657,43 @@ if(AAUtils.isAjaxRequest(request)){
                     </l5m:dialogBottom>
                 </l5m:dialog>
     
-            
+                <l5m:dialog
+                    id="excelDialog"
+                    title="Export Option"
+                    overlayZIndex="100"
+                    dialogWidth="700px"
+                    dialogHeight="150px"
+                    canClose="true"
+                    style="${styleLowerCase}"> 
+                        <aa:zone name="exportDialogZone">  
+                             <l5m:ExcelOption
+                                    id="${servicer.excelOption.id}"
+                                    stateBean="${servicer.excelOption}"
+                                    style='${styleLowerCase}' includeCSV="true"
+                                />
+                        <script  type="text/javascript">
+                            <c:if test="${worker.showDialog}">	 
+                                $('excelDialog').show();
+                            </c:if>
+                        </script> 				  
+                     </aa:zone>
+                    <l5m:dialogBottom>
+                        <a href="javascript:pageAction.hideDialog('excelDialog');pageAction.clickExportButton('<%=ActionConstants.EXPORT_EXCEL%>');">[OK]</a>
+                            &nbsp;&nbsp;
+                        <a href="javascript:pageAction.hideDialog('excelDialog');">[Cancel]</a>
+                            &nbsp;&nbsp;
+                        <a href="javascript:pageAction.clickExportButton('<%=ActionConstants.EXPORT_EXCEL%>');">[Apply]</a>
+                    </l5m:dialogBottom>
+                </l5m:dialog>
          
-            
+                <aa:zone name="footerZone">
+                    <l5m:jspFoot id="jspFoot"/>
+                </aa:zone>
                 
          
                 <!-- end dialog -->
-                 
-            </form>
-            
-         <script type="text/javascript"  src='<%=request.getContextPath()%>/tagresources/javascript/QHTInputUtil.js'></script>
-         <script type="text/javascript">
-            function m_clickButton2(button, index){
-                document.${worker.FORM_NAME}.<%=AppConfig.getProperty("butOption")%>.value = button;
-                document.${worker.FORM_NAME}.<%=TTVConstants.MODULE_INDEX%>.value = index; 
-                document.${worker.FORM_NAME}.submit();
-            }    
-            document.getElementById('mainmessage').style.display='none';
-            document.getElementById('mainpart').style.display='inline';
-        </script>     
-        </div>
-    </body> 
+ 
+    </l5m:jspBody>
 </html>
   
          

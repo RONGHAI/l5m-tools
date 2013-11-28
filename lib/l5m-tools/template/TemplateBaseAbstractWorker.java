@@ -49,21 +49,7 @@ public class !REPLACE_ME_FILE!Worker extends AbstractBaseWorker {
 
     }
 
-    public String[] getActions() {
-        return new String[] { "", "pageAction.showDialog('filterDialog')", // filter
-                "", // search
-                "", // highlight
-                "pageAction.showDialog('sortDialog')", // sort
-                "pageAction.showDialog('displayDialog')", // display
-                "pageAction.clickButton('changeDecimal')", // decimal
-                "pageAction.clickExportButton('" + ActionConstants.EXPORT_EXCEL + "')", // excel
-                "pageAction.clickExportButton('" + ActionConstants.EXPORT_PDF + "')", // pdf
-                "pageAction.showDialog('optionDialog')", // options
-                //"pageAction.showDialogDirectly('emailDialog')", // email
-                "pageAction.clickButton('changeSortDisplayMode')", // inc
-
-        };
-    }
+    
 
     @Override
     public int getDataAvailability() {
@@ -83,22 +69,7 @@ public class !REPLACE_ME_FILE!Worker extends AbstractBaseWorker {
         return PANEL.Help.panelIndex();
     }
 
-    public IconStatus[] getIconsStatus() {
-        final boolean hasData = this.hasData();
-        return new IconStatus[] { this.servicer.getBaseServicerParameterBean().isSelectionPanelStatusOpen() ? IconStatus.open : IconStatus.close, hasData ? IconStatus.inactive : IconStatus.inactive, // filter
-                IconStatus.inactive, // search
-                IconStatus.inactive, // highlight
-                hasData ? IconStatus.active : IconStatus.inactive, // sort
-                hasData ? IconStatus.active : IconStatus.inactive, // display
-                hasData ? IconStatus.active : IconStatus.inactive, // decimal
-                hasData ? IconStatus.active : IconStatus.inactive, // excel
-                IconStatus.inactive, // pdf
-                IconStatus.inactive, // options
-                //hasData ? IconStatus.active : IconStatus.inactive, // email
-                IconStatus.active, // inc
-        };
-
-    }
+    
 
     /**
      * @return the jSP_TOGO
@@ -133,29 +104,14 @@ public class !REPLACE_ME_FILE!Worker extends AbstractBaseWorker {
         return PANEL.values();
     }
 
-    @Override
-    public String getRenderHTML() {
-        if (!this.hasData()) {
-            return "";
-        }
-        try {
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "";
-
-    }
+    
 
     @Override
     public !REPLACE_ME_FILE!ServicerImpl getServicer() {
         return this.servicer;
     }
 
-    public TopBarIcon[] getTopBarIcons() {
-        return new TopBarIcon[] { TopBarIcon.Start, TopBarIcon.Filter, TopBarIcon.Search, TopBarIcon.Highlight, TopBarIcon.Sort, TopBarIcon.Display, TopBarIcon.Decimal, TopBarIcon.Excel,
-                TopBarIcon.PDF, TopBarIcon.Options, /*TopBarIcon.Email,*/ TopBarIcon.IncIcon, };
-
-    }
+    
 
     /*
      * @return the wORKER_NAME
@@ -176,10 +132,20 @@ public class !REPLACE_ME_FILE!Worker extends AbstractBaseWorker {
 
     @Override
     protected void initWorker() {
-        this.servicer.getBaseServicerParameterBean().setPanelIndex(PANEL.Help.panelIndex());
+        this.servicer.getBaseServicerParameterBean().setPanelIndex(0);
 
     }
-
+	
+	@Override
+	public void clearResultAction() {
+        super.clearResultAction();
+        this.servicer.setPanelIndex(0);
+    }
+	
+	public void updateExportInformationBean(){
+		this.servicer.updateExportInformationBean();
+	}
+	
     public void setServicer(!REPLACE_ME_FILE!ServicerImpl servicer) {
         this.servicer = servicer;
     }

@@ -59,7 +59,7 @@ public class !REPLACE_ME_FILE!ServicerImpl extends BaseServicerParaBean.Abstract
     @Override
     public void clearCache() {
         super.clearCache();
-        this.servicerParamBean.setPanelIndex(PANEL.Help.panelIndex()); 
+        this.servicerParamBean.setPanelIndex(0); 
          
         System.gc(); 
        }
@@ -211,6 +211,27 @@ public class !REPLACE_ME_FILE!ServicerImpl extends BaseServicerParaBean.Abstract
     }
  
      
-    
+    public ArrayList<String> updateExportInformationBean(){
+        ArrayList<String> footerList = new ArrayList<String>();
+        //TODO
+        if(this.getExportInformationBean() != null){
+            this.getExportInformationBean().setFooterList(footerList);
+        }
+        return footerList;
+    }
+	
+	@RequestParse(parseType = ParseMethodType.StateBean, actions = "exportExcelAction")
+    protected ExcelOptionStateBean excelOption;
+
+
+
+    public ExcelOptionStateBean getExcelOption () {
+        if (excelOption == null) {
+            excelOption = new ExcelOptionStateBean();
+            excelOption.setId("excelOption");
+        }
+        return excelOption;
+    }
+
     
 }
