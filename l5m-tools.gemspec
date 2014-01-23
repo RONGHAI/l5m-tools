@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "l5m-tools"
-  s.version = "0.0.10"
+  s.version = "0.0.11"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["RONGHAI"]
-  s.date = "2013-11-28"
+  s.date = "2014-01-23"
   s.description = "A tool set for Lake5Media and QingheTech developer"
   s.email = "ronghai.wei@outlook.com"
   s.executables = ["duplicate-app", "l5m", "make-app", "set_env.sh", "svn.tool"]
