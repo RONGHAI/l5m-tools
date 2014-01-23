@@ -19,7 +19,19 @@ module L5MTools
                     end 
                 end
             end
-        end        
+        end
+        #read file list from file and delete them
+        def del(*args)
+            replacements  = {args[1] => args[2]}
+            File.open(args[0], "r") do |infile|
+                while (line = infile.gets)
+                    line = line.chomp.strip
+                    if line.length > 0 && line[0] != '#'
+                        FileUtils.rm(line, :force => true)
+                    end
+                end
+            end
+        end
         def make_app(package, application, use_base_worker, &block)
             application[0] = application[0].capitalize 
             replacements = {
