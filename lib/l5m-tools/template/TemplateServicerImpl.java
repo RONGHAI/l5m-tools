@@ -9,6 +9,13 @@ import com.l5m.common.bean.GeneralAvailabilityModule;
 import com.l5m.common.util.dcnds.QHTCommonUtil;
 import com.l5m.customtags.beans.BaseServicerParaBean;
 import com.l5m.customtags.tags.utils.GenerateTagUtil;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import com.l5m.customtags.beans.annotation.ParseMethodType;
+import com.l5m.customtags.beans.annotation.RequestParse;
+import com.l5m.customtags.module.statebean.ExcelOptionStateBean;
+
 import com.l5m.!REPLACE_STYLE!.engine.worker.UserCompanyWorker;
 /**
  * make sure code as clear as possible.
@@ -24,7 +31,7 @@ import com.l5m.!REPLACE_STYLE!.engine.worker.UserCompanyWorker;
  */
 public class !REPLACE_ME_FILE!ServicerImpl extends BaseServicerParaBean.AbstractBaseServicer{
     private static final long serialVersionUID = 1L;
-    public static enum PANEL {
+    public static enum PANEL  implements com.l5m.customtags.beans.PanelTab{
          REPORT("REPORT")  ,  
          Help("Help"),  DataAvailability("Data Availability")
         ; //Total Day/Prime * LSD/C3
@@ -51,6 +58,10 @@ public class !REPLACE_ME_FILE!ServicerImpl extends BaseServicerParaBean.Abstract
         public int panelIndex(){
             return this.ordinal();
         }
+         @Override
+        public int getPanelIndex() {
+            return panelIndex();
+        }
     }
     
     
@@ -59,14 +70,16 @@ public class !REPLACE_ME_FILE!ServicerImpl extends BaseServicerParaBean.Abstract
     @Override
     public void clearCache() {
         super.clearCache();
-        this.servicerParamBean.setPanelIndex(0); 
-         
+        this.servicerParamBean.resetPanelIndex2Default();
         System.gc(); 
        }
  
  
     @Override
     public void handlePaginator(int panelIndex) {
+        if(panelIndex ==  PANEL.DataAvailability.panelIndex()  || panelIndex ==  PANEL.Help.panelIndex() ){
+            return ;
+        }
         if (this.servicerParamBean.getPaginatorStateBean(panelIndex) == null) {
             this.servicerParamBean.setPaginatorStateBean(GenerateTagUtil.initPaginatorStateBean("PaginatorStateBeanTag"), panelIndex);
             this.servicerParamBean.getPaginatorStateBean(panelIndex).setRowsPerPage(1);
@@ -88,8 +101,12 @@ public class !REPLACE_ME_FILE!ServicerImpl extends BaseServicerParaBean.Abstract
     public void init( ) {
         super.init();  
         try {
-            this.servicerParamBean = new BaseServicerParaBean(this.dh, this.companyId, this.groupId , this.userId, this.userCompanyId, PANEL.values().length);
+            if(this.servicerParamBean == null){
+                this.servicerParamBean = new  BaseServicerParaBean();
+            }
+            this.servicerParamBean .init(this.dh, this.companyId, this.groupId , this.userId, this.userCompanyId, PANEL.values().length);
             this.servicerParamBean.initDisplayAndSortBy(); 
+             this.servicerParamBean.setDefaultPanelIndex(PANEL.REPORT.panelIndex());
             try{
                 this.initTimeSpan();
             }catch(Exception e){

@@ -10,6 +10,7 @@ import com.l5m.customtags.tags.utils.IconStatus;
 import com.l5m.customtags.tags.utils.TopBarIcon;
 import com.l5m.!REPLACE_STYLE!.engine.servicer.!REPLACE_ME_FILE!ServicerImpl;
 import com.l5m.!REPLACE_STYLE!.engine.servicer.!REPLACE_ME_FILE!ServicerImpl.PANEL;
+import com.l5m.!REPLACE_STYLE!.engine.exporter.!REPLACE_ME_FILE!Viewer;
 
 public class !REPLACE_ME_FILE!Worker extends AbstractBaseWorker {
     private static final long serialVersionUID = 1L;
@@ -132,14 +133,15 @@ public class !REPLACE_ME_FILE!Worker extends AbstractBaseWorker {
 
     @Override
     protected void initWorker() {
-        this.servicer.getBaseServicerParameterBean().setPanelIndex(0);
+        this.servicer.getBaseServicerParameterBean().resetPanelIndex2Default();
 
     }
 	
 	@Override
 	public void clearResultAction() {
         super.clearResultAction();
-        this.servicer.setPanelIndex(0);
+        this.servicer.getBaseServicerParameterBean().resetPanelIndex2Default();
+
     }
 	
 	public void updateExportInformationBean(){
@@ -154,5 +156,11 @@ public class !REPLACE_ME_FILE!Worker extends AbstractBaseWorker {
     public void submitAction() { 
         super.submitAction();
 
+    }
+
+    @Override
+    public !REPLACE_ME_FILE!Viewer getViewer (boolean isHTML) {
+        !REPLACE_ME_FILE!Viewer viewer = new !REPLACE_ME_FILE!Viewer(this, this.servicer.getExcelOption(), isHTML );
+        return viewer;
     }
 }

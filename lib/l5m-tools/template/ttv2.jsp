@@ -4,7 +4,7 @@
   com.l5m.common.bean.*, 
   com.l5m.common.l5m_util.bean.*,
   com.l5m.common.l5m_util.rld.*,
-  com.l5m.common.util.*,
+  com.l5m.common.util.*,com.l5m.customtags.beans.*, com.l5m.customtags.tags*,
   org.ajaxanywhere.AAUtils,
   com.l5m.ttv2.bean.*, 
   com.l5m.ttv2.engine.worker.*,
@@ -27,20 +27,31 @@
 <c:set var="formName" value="${worker.FORM_NAME}" scope="request"/> 
 <c:set var="packageLowerCase" value="${worker.packageLowerCase}" scope="request"/>
 <c:set var="packageUpperCase" value="${worker.packageUpperCase}" scope="request"/>
-<c:set var="styleLowerCase" value="${packageLowerCase}" />
-<c:set var="styleUpperCase" value="${packageUpperCase}" />
+<c:set var="styleLowerCase" value="${worker.styleLowerCase}" />
+<c:set var="styleUpperCase" value="${worker.styleUpperCase}" />
 <c:set var="PANEL" value="${worker.PANEL}"/>
 <%
 if(AAUtils.isAjaxRequest(request)){
   AAUtils.addZonesToRefresh(request, "alwaysRefreshZone,"+ ((String)request.getAttribute("refreshZones"))); 
 }
 %>
+    <c:set var="soc" value='${servicer.sourceOptionController}'/>
+    <c:set var='jsCache' value='<%="&__jstimeunique="+System.currentTimeMillis()%>'/>        
+    <c:set var='theme' value='${worker.navigationBean.theme}' />
+    <c:set var='_request' value="<%=request%>"/>
+    <c:set var="isIE9Below" value="${l5mfunctions:isIE9Below(_request)}"/>
+    <%
+
+        CSSImportParaBean _cssImport = new CSSImportParaBean(request.getContextPath(), "ms2", 1);
+        JSImportParaBean _jsImport = new JSImportParaBean(request.getContextPath());
+
+    %>
 <html>
   
   
 
 
-  <l5m:jspHead useIE7Compatible="true"  includeJQuery='true' title="${worker.APP_NAME}" formName="${formName}" packageName="${packageLowerCase}" planingCss="L001;L004">
+  <l5m:jspHead useIE7Compatible="true"  useCssImport='1' includeJQuery='true' title="${worker.APP_NAME}" formName="${formName}" packageName="${packageLowerCase}" planingCss="L001;L004">
     
     <!-- add additinal js css in here -->
     
@@ -306,9 +317,20 @@ if(AAUtils.isAjaxRequest(request)){
       table{
         border-collapse:collapse;
       }
+      .grid .TD{border-top:1px dotted #888888;}
+      .grid .LD{border-left:1px dotted #888888;}
+      .grid .row{line-height:33px;}
+      .grid label{white-space:nowrap;}
     </style> 
     
-    
+     <%=_cssImport.getCSSFileImports3(
+        
+    )%>
+
+
+    <%=_jsImport.getJSFileImports3( 
+       
+    )%>
  
   
     
@@ -337,10 +359,8 @@ if(AAUtils.isAjaxRequest(request)){
          
         <aa:zone name="topNavigationZone"> 
            <l5m:TopBar2
-              id="TopBar" 
-               topBarIcons = "${worker.topBarIcons}"
-               iconsStatus = "${worker.iconsStatus}"
-               actions = "${worker.actions}"
+               id="${paraBean.topBarStateBean.id}"
+               topBarItems='${worker.topBarItems}'
                decimalControlList = "${servicer.reportDecimalControlList}"
                startControlZone = "topPanel"
                style = "${styleLowerCase}"
@@ -356,9 +376,11 @@ if(AAUtils.isAjaxRequest(request)){
             <table  border="0" cellspacing="0" cellpadding="0" width="100%">
               <tr>
                 <td> 
-                  
+                    <c:set var='leftstyle' value='line-height:33px;width:200px;padding-left:7px;border-bottom:1px dotted #888; font-weight:bold;' />
+                    <c:set var='righstyle' value='padding-left:10px;border-bottom:1px dotted #888;border-left:1px dotted #888;'/>
+                    
                     <l5m:tabPanel2
-                    id="accordionTestTop" 
+                    id="${baseServicerParameterBean.tabPanelID}"  
                     captions="${baseServicerParameterBean.tabbedPanelCaptions}" 
                     selected="${baseServicerParameterBean.selectedTab}" 
                     style="${styleLowerCase}"
@@ -384,7 +406,12 @@ if(AAUtils.isAjaxRequest(request)){
 
                               <aa:zone name="sourcePanelZone"> 
                               <table id='sourcePanel' border="0" cellspacing="0" cellpadding="0" width="100%">
-                                 <tr><td></td></tr>
+                                 <tr class="row">
+                                      <td class="TD" style="${leftstyle};" nowrap valign="top"> /td>
+                                      <td class="TD LD" style="${righstyle}; line-height:16px;">
+                                     
+                                      </td>
+                                  </tr>
                               </table> 
                               </aa:zone>  
                              </td>
@@ -433,98 +460,14 @@ if(AAUtils.isAjaxRequest(request)){
             <tr>
               <td align="left" valign="top" width="99%">
                 <aa:zone name="result">
-                  <input type="hidden" name="panelIndex" id="name" value="${baseServicerParameterBean.panelIndex}"/> 
-                  <input type="hidden" name="displayStage" id="displayStage" value="${true}"/> 
-                  <c:set var="PANEL" value="${worker.PANEL}"/>
-                  <table id="sectable" border="0" cellpadding="0" cellspacing="0" width="100%" height="26"> 
-                    <tbody>
-                       <tr align="center">
-                         <c:forEach items="${PANEL}" var="panel" varStatus="panelIndex">
-                          <c:if test="${panel.enable}">
-                            <c:set var="jsChangePanel">
-                              javascript:pageAction.changePanel('${panelIndex.index}');
-                            </c:set> 
-                            <c:if test="${true}">
-                              <td   width="120px"  style=' ${worker.servicer.panelIndex == panelIndex.index ?"" : ""} ; white-space:nowrap; ${ true ?"font-weight: bold" : ""} ; font-size:11px; border-top-width:0px;${panelIndex.first?"border-left-width:0px":""}'  nowrap id="displayBy_${panelIndex.index }" onclick="${baseServicerParameterBean.panelIndex== panelIndex.index ? '':(true? jsChangePanel:'')}" class="${worker.servicer.panelIndex== panelIndex.index? 'sec2' : true ?'sec1':'sec1'}" >
-                                ${panel.label}  
-                              </td >  
-                            </c:if>
-                            <c:if test="${false}">
-                              <td   width="145px"  style=' ${worker.servicer.panelIndex == panelIndex.index || !true ?"cursor: none" : ""} ; white-space:nowrap; ${worker.servicer.panelIndex == panelIndex.index || true ?"font-weight: bold" : ""} ; font-size:11px; border-top-width:0px;${panelIndex.first?"border-left-width:0px":""}'  nowrap id="displayBy_${panelIndex.index }" onclick="${baseServicerParameterBean.panelIndex== panelIndex.index ? '':(true? jsChangePanel:'')}" class="${worker.servicer.panelIndex== panelIndex.index? 'sec2' :true?'sec1':'sec1'}" >
-                                ${panel.label }  
-                              </td >   
-                            </c:if>
-                          </c:if> 
-                        </c:forEach>   
-                        <td class="sec1" style="border-color:#63B1e6; border-top-width:0px;  border-right-width:0px;cursor: none;">&nbsp;</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  
-                
-                   <br/>  
-                   <div style='clear:both'/>
-                   
-                     <table width="100%">
-                    <tr> 
-                    <td  nowrap="nowrap"  height="40px" style="padding-left:5px;" >   
-                    </td>
-                    
-                    <td  nowrap="nowrap"  height="40px" style="text-align:right; float:right ;padding-right:10px;">	     
-                      <c:if test="${baseServicerParameterBean.panelIndex !=worker.help && baseServicerParameterBean.panelIndex !=worker.dataAvailability}" > 
-                         ${worker.renderPaginatorHTML} 
-                       </c:if> 
-                     </td>
-                    </tr>
-                  </table> 
-                   
-                  
-                    <table border="0" cellpadding="0" cellspacing="0" width="100%" >
-                    <tr>  <td  nowrap="nowrap" align='left' >  
-                        <c:if test="${baseServicerParameterBean.panelIndex !=worker.help && baseServicerParameterBean.panelIndex !=worker.dataAvailability}" > 
-                       <!--  <a style='font-weight:bold' href='javascript:pageAction.clickExportButton("exportToCSV")'>[Export to CSV] </a> <br/><br/> -->
-                        </c:if>
-                     </td></tr>
-                    <tr>  
-
-                    <td  nowrap="nowrap" align='center' >  
-                       <c:if test="${baseServicerParameterBean.panelIndex !=worker.help && baseServicerParameterBean.panelIndex !=worker.dataAvailability}" > 
-                        ${worker.renderHTML}    
-                       </c:if>  
-                     </td>
-                    </tr>
-                  </table> 
-                     
-                    
-                    
-                 
-                   
-                   
-                   
-                   <c:if test="${baseServicerParameterBean.panelIndex ==worker.help}">
-                    <!-- the div of descriptionTab -->
-                    <div id="descriptionTab"><br/><br/><l5m:appDesc
-                      navigationBean="${worker.navigationBean}" style="ttv2" id="navDesc" />
-                    </div>
-                    <!-- the end descriptionTab--> 
-                  </c:if>
-                  
-                  <c:if test="${baseServicerParameterBean.panelIndex ==worker.dataAvailability}">
-                    <table width="100%">
-                      <tr>
-                      <td width="15%" rowspan="4">&nbsp;</td>
-                      <td width="70%">
-                        <c:set var="moduleGeneralAvailability" scope="request" value="${worker.servicer.generalAvailabilityModule}"/>
-                        <!--  GeneralAvailabilityModule.SESSION_NAME -->
-                        <table border="0" cellpadding="0" cellspacing="2" width="100%"> 
-                          <jsp:include page="GeneralAvailabilityModule.jsp" flush="true"/>
-                        </table>
-                      </td>
-                      <td width="15%" rowspan="4">&nbsp;</td>
-                      </tr>
-                      </table> 
-                  
-                  </c:if> 
+                  <l5m:resultZone
+                            panels='${PANEL}'
+                            formName="${worker.FORM_NAME}"  packageName="${packageLowerCase}"   style="${styleLowerCase}"
+                            groupId="${servicer.groupId}"   companyId="${servicer.companyId}"
+                            userId="${servicer.userId}" 
+                            dbHandler="${servicer.dbHandler}" usingDefaultPaginatorRender='false'
+                            
+                        />
                 </aa:zone> 
               </td>
             </tr>
@@ -591,14 +534,16 @@ if(AAUtils.isAjaxRequest(request)){
                     <c:if test="${!empty paraBean.displayWrappers[paraBean.panelIndex]}">   
                      <c:forEach var="displayWrapper" items="${paraBean.displayWrappers[paraBean.panelIndex]}">                      
                       <c:if test="${!empty displayWrapper.columnsMap}">
+                          <div style="${displayWrapper.hidden?'display:none;':''}">
                             <l5m:multipleSelect
                          id="${displayWrapper.id}"
                          style="${styleLowerCase}"
                          title="${displayWrapper.title}"
                          sourceValues="${displayWrapper.columnsMap}"
                          selectedValues="${displayWrapper.selectedColumns }"
+                         selectedValue="${displayWrapper.selectedValue}"
                          onChange=""
-                         displayMode="2"
+                         displayMode="${displayWrapper.displayMode}"
                          useSortBy="true"
                          sortBy="1"
                          sortField="2"
@@ -608,7 +553,8 @@ if(AAUtils.isAjaxRequest(request)){
                          destinationWidth="200"
                          sourceSize="5"
                          destinationSize="5"
-                      />                   
+                      />      
+                      </div>             
                       </c:if>                     
                      </c:forEach> 
                   </c:if>   
@@ -682,11 +628,7 @@ if(AAUtils.isAjaxRequest(request)){
             <a href="javascript:pageAction.clickExportButton('<%=ActionConstants.EXPORT_EXCEL%>');">[Apply]</a>
           </l5m:dialogBottom>
         </l5m:dialog>
-     
-        <aa:zone name="footerZone">
-          <l5m:jspFoot id="jspFoot"/>
-        </aa:zone>
-        
+   
      
         <!-- end dialog -->
  
