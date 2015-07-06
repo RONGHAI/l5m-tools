@@ -14,6 +14,7 @@
     * DEV_HOST 
 * `$l5m make` or `$make-app`# to create a new app
 * `$l5m dup file.csv original new` or `$duplicate-app file.csv original new`  #duplicate a app with the files in file.csv, and use new to replace original
+* `$l5m dup package original new` #duplicate an application from special package, no file.csv required.
 * `$l5m svn status` #ls all uncommitted files
 * `$l5m svn log` #ls all today's commits
 * `$l5m svn update packs` #update all packges.
