@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "l5m-tools"
-  s.version = "0.0.11"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["RONGHAI"]
-  s.date = "2014-01-23"
+  s.date = "2015-07-07"
   s.description = "A tool set for Lake5Media and QingheTech developer"
   s.email = "ronghai.wei@outlook.com"
   s.executables = ["duplicate-app", "l5m", "make-app", "set_env.sh", "svn.tool"]
@@ -42,6 +42,7 @@ Gem::Specification.new do |s|
     "lib/l5m-tools/template/Template.jsp",
     "lib/l5m-tools/template/TemplateBaseAbstractWorker.java",
     "lib/l5m-tools/template/TemplateServicerImpl.java",
+    "lib/l5m-tools/template/TemplateViewer.java",
     "lib/l5m-tools/template/TemplateWorker.java",
     "lib/l5m-tools/template/frt.jsp",
     "lib/l5m-tools/template/ms2.jsp",
@@ -54,27 +55,27 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/RONGHAI/l5m-tools"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.17"
+  s.rubygems_version = "2.0.14"
   s.summary = "A tool set for Lake5Media and QingheTech developer"
 
   if s.respond_to? :specification_version then
-    s.specification_version = 3
+    s.specification_version = 4
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_development_dependency(%q<shoulda>, [">= 0"])
       s.add_development_dependency(%q<rdoc>, ["~> 3.12"])
-      s.add_development_dependency(%q<bundler>, ["~> 1.2.0"])
+      s.add_development_dependency(%q<bundler>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.8.4"])
     else
       s.add_dependency(%q<shoulda>, [">= 0"])
       s.add_dependency(%q<rdoc>, ["~> 3.12"])
-      s.add_dependency(%q<bundler>, ["~> 1.2.0"])
+      s.add_dependency(%q<bundler>, [">= 0"])
       s.add_dependency(%q<jeweler>, ["~> 1.8.4"])
     end
   else
     s.add_dependency(%q<shoulda>, [">= 0"])
     s.add_dependency(%q<rdoc>, ["~> 3.12"])
-    s.add_dependency(%q<bundler>, ["~> 1.2.0"])
+    s.add_dependency(%q<bundler>, [">= 0"])
     s.add_dependency(%q<jeweler>, ["~> 1.8.4"])
   end
 end
