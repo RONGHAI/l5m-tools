@@ -77,5 +77,15 @@ module L5MTools
             end            
             block.call(Time.now, package, application, use_base_worker) if block_given?
         end
+
+        def version
+            file = Pathname.new(__FILE__).parent.parent.parent.to_s + "/VERSION"
+            puts(File.exist?(file) ? File.read(file) : "") 
+        end
+        def help
+            puts <<-EOF
+                Please go to https://github.com/RONGHAI/l5m-tools
+            EOF
+        end
     end
 end

@@ -22,6 +22,8 @@ Jeweler::Tasks.new do |gem|
   gem.email = "ronghai.wei@outlook.com"
   #gem.platform = Gem::Platform::Win32
   gem.authors = ["RONGHAI"]
+  gem.post_install_message = ""
+  gem.files.exclude "test", "Gemfile", "Rakefile"
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
