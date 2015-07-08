@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "l5m-tools"
-  s.version = "0.1.1"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["RONGHAI"]
-  s.date = "2015-07-07"
+  s.date = "2015-07-08"
   s.description = "A tool set for Lake5Media and QingheTech developer"
   s.email = "ronghai.wei@outlook.com"
   s.executables = ["duplicate-app", "l5m", "make-app", "set_env.sh", "svn.tool"]
@@ -19,10 +19,8 @@ Gem::Specification.new do |s|
   ]
   s.files = [
     ".document",
-    "Gemfile",
     "LICENSE.txt",
     "README.md",
-    "Rakefile",
     "VERSION",
     "bin/duplicate-app",
     "bin/l5m",
@@ -54,6 +52,7 @@ Gem::Specification.new do |s|
   ]
   s.homepage = "http://github.com/RONGHAI/l5m-tools"
   s.licenses = ["MIT"]
+  s.post_install_message = ""
   s.require_paths = ["lib"]
   s.rubygems_version = "2.0.14"
   s.summary = "A tool set for Lake5Media and QingheTech developer"
