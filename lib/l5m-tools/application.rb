@@ -3,7 +3,6 @@ require 'pathname'
 
 module L5MTools    
     TEMPLATE_DIR = Pathname.new(__FILE__).parent + 'template'    
-    puts TEMPLATE_DIR
     class Application
         require 'l5m-tools/tools'
         include Tools
