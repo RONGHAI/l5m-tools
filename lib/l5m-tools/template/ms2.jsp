@@ -5,7 +5,7 @@
   com.l5m.common.l5m_util.bean.*,
   com.l5m.common.l5m_util.rld.*,
   com.l5m.common.util.*,
-  org.ajaxanywhere.AAUtils, com.l5m.customtags.beans.*, com.l5m.customtags.tags*,
+  org.ajaxanywhere.AAUtils, com.l5m.customtags.beans.*, com.l5m.customtags.tags.*,
   com.l5m.!REPLACE_STYLE!.bean.*, 
   com.l5m.!REPLACE_STYLE!.engine.worker.*,
   com.l5m.common.l5m_util.module.*"
@@ -34,7 +34,6 @@ if(AAUtils.isAjaxRequest(request)){
   AAUtils.addZonesToRefresh(request, "alwaysRefreshZone,"+ ((String)request.getAttribute("refreshZones"))); 
 }  
 %><!-- --> 
-    <c:set var="soc" value='${servicer.sourceOptionController}'/>
     <c:set var='jsCache' value='<%="&__jstimeunique="+System.currentTimeMillis()%>'/>        
     <c:set var='theme' value='${worker.navigationBean.theme}' />
     <c:set var='_request' value="<%=request%>"/>
@@ -52,7 +51,7 @@ if(AAUtils.isAjaxRequest(request)){
   
 
 
-  <l5m:jspHead useIE7Compatible="true" useCssImport='1'  includeJQuery='true' title="${worker.APP_NAME}" formName="${formName}" packageName="${packageLowerCase}" planingCss="L001;L004">
+  <l5m:jspHead useIE7Compatible="true" useCssImport='1' cssImportParaBean="<%=_cssImport%>" jsImportParaBean="<%=_jsImport%>"  includeJQuery='true' title="${worker.APP_NAME}" formName="${formName}" packageName="${packageLowerCase}" planingCss="L001;L004">
     
     <!-- add additinal js css in here -->
     <link href="<%=request.getContextPath()%>/htdoc/datepicker-lite.css" rel="stylesheet" type="text/css" />
@@ -161,6 +160,7 @@ if(AAUtils.isAjaxRequest(request)){
                     id="${baseServicerParameterBean.tabPanelID}" 
                     captions="${baseServicerParameterBean.tabbedPanelCaptions}" 
                     selected="${baseServicerParameterBean.selectedTab}" 
+                    hiddenCaptions="${baseServicerParameterBean.hiddenPanelCaptions}"
                     style="${styleLowerCase}"
                     showDisplayControl="false"> 
                     <l5m:tab2>
@@ -185,7 +185,7 @@ if(AAUtils.isAjaxRequest(request)){
                               <aa:zone name="sourcePanelZone"> 
                               <table id='sourcePanel' border="0" cellspacing="0" cellpadding="0" width="100%">
                                   <tr class="row">
-                                      <td class="TD" style="${leftstyle};" nowrap valign="top"> /td>
+                                      <td class="TD" style="${leftstyle};" nowrap valign="top"> </td>
                                       <td class="TD LD" style="${righstyle}; line-height:16px;">
                                      
                                       </td>
