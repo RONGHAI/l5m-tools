@@ -16,66 +16,52 @@ module L5MTools
             package = package[0...(package.index(/[\/\\]/))]
             require 'l5m-tools/l5m-tools-module'
             L5MTools.svn.delete([package], {}, [ "--force", svnfile])
-        end       
-        def duplicate_app(*args)
-            delete = args.delete('-d')
-            replacements  = {args[1] => args[2]}
+        end
 
-            unless File.exist?(args[0])
-                duplicate_wo_csv(*args)
-            else
-                File.open(args[0], "r") do |infile|
-                    while (line = infile.gets)
-                        line = line.chomp.strip
-                        if line.length > 0 && line[0] != '#'
-                            #duplicate_and_replace( line.chomp ,  replacements ) 
-                            #FileUtils.rm(line, :force => true) if delete
-                            rm(line, :force => true) if duplicate_and_replace( line.chomp ,  replacements )[1] != line && delete
-                        end 
+
+        def search_files(package, application)
+            Dir.glob("#{WORKSPACE}/#{package}/{src,WebContent}/**/#{application}*.*", File::FNM_CASEFOLD).each{|line|  
+                bn = File.basename(line, ".*")
+                unless(bn[application.length] =~ /[a-z0-9]/)
+                    yield line if block_given?
+                end              
+            }
+        end
+
+        def read_files(csvfile)
+            File.open(csvfile, "r") do |infile|
+                while (line = infile.gets)
+                    line = line.chomp.strip
+                    if line.length > 0 && line[0] != '#'
+                        yield line if block_given?
                     end
                 end
             end
         end
 
-        def duplicate_wo_csv(*args)
+        def duplicate_app(*args)
             delete = args.delete('-d')
-            package = args[0]
-            application = args[1]
             replacements  = {args[1] => args[2]}
-            Dir.glob("#{WORKSPACE}/#{package}/{src,WebContent}/**/#{application}*.*", File::FNM_CASEFOLD).each{|line|  
-                bn = File.basename(line, ".*")
-                #puts line #File.basename(line, ".*") 
-                unless(bn[application.length] =~ /[a-z0-9]/)
-                    #puts line #File.basename(line, ".*") 
-                    rm(line, :force => true) if duplicate_and_replace( line.chomp ,  replacements )[1] != line && delete
-                end                
+            p = ->(line){
+                rm(line, :force => true) if duplicate_and_replace( line.chomp ,  replacements )[1] != line && delete
             }
+            if File.exist?(args[0])
+                read_files(args[0], &p)
+            else
+                search_files(args[0], args[1], &p)
+            end
         end
 
-        def del_wo_csv(*args)
-            package = args[0]
-            application = args[1]
-            Dir.glob("#{WORKSPACE}/#{package}/{src,WebContent}/**/#{application}*.*", File::FNM_CASEFOLD).each{|line|  
-                bn = File.basename(line, ".*")
-                unless(bn[application.length] =~ /[a-z0-9]/)
-                    puts line
-                    rm(line, :force => true)
-                end                
-            }
-        end
-        #read file list from file and delete them
+       
         def del(*args)
-             unless File.exist?(args[0])
-                del_wo_csv(*args)
+            p = ->(file){
+                rm(file, :force => true)
+                puts file
+            }
+            if File.exist?(args[0])
+                read_files(args[0], &p)
             else
-                File.open(args[0], "r") do |infile|
-                    while (line = infile.gets)
-                        line = line.chomp.strip
-                        if line.length > 0 && line[0] != '#'
-                            rm(line, :force => true)
-                        end
-                    end
-                end
+                search_files(args[0], args[1], &p)
             end
         end
         def make_app(package, application, use_base_worker, &block)
@@ -83,22 +69,19 @@ module L5MTools
             replacements = {
               '!REPLACE_ME_FILE!' => application,
               '!REPLACE_STYLE!' => package
-            }  
-            copy_with_replace(  use_base_worker  ? (TEMPLATE_DIR+"TemplateBaseAbstractWorker.java") :    (TEMPLATE_DIR+"TemplateWorker.java") , 
-                "#{WORKSPACE}/#{package}/src/com/l5m/#{package}/engine/worker/#{application}Worker.java"  , replacements ) 
-            copy_with_replace( TEMPLATE_DIR+"TemplateServicerImpl.java" , 
-                    "#{WORKSPACE}/#{package}/src/com/l5m/#{package}/engine/servicer/#{application}ServicerImpl.java"  , replacements ) 
-
-            copy_with_replace( TEMPLATE_DIR+"TemplateViewer.java" , 
-                    "#{WORKSPACE}/#{package}/src/com/l5m/#{package}/engine/exporter/#{application}Viewer.java"  , replacements ) 
-
-            if File.exist?( TEMPLATE_DIR+"#{package}.jsp")
-                copy_with_replace( TEMPLATE_DIR+"#{package}.jsp" ,
-                    "#{WORKSPACE}/#{package}/src/jsp/#{application}.jsp" , replacements ) 
-            else 
-                copy_with_replace( TEMPLATE_DIR+"Template.jsp" , 
-                    "#{WORKSPACE}/#{package}/src/jsp/#{application}.jsp" , replacements ) 
-            end            
+            }
+            [ 
+              #worker
+              ["#{TEMPLATE_DIR}/"<<( use_base_worker ? "TemplateBaseAbstractWorker.java" : "TemplateWorker.java") , "#{WORKSPACE}/#{package}/src/com/l5m/#{package}/engine/worker/#{application}Worker.java"],
+              #servicer
+              ["#{TEMPLATE_DIR}/TemplateServicerImpl.java", "#{WORKSPACE}/#{package}/src/com/l5m/#{package}/engine/servicer/#{application}ServicerImpl.java" ],
+              #Viewer
+              ["#{TEMPLATE_DIR}/TemplateViewer.java", "#{WORKSPACE}/#{package}/src/com/l5m/#{package}/engine/exporter/#{application}Viewer.java"  ],
+              #jsp
+              [File.exist?( TEMPLATE_DIR+"#{package}.jsp") ? TEMPLATE_DIR+"#{package}.jsp" : TEMPLATE_DIR+"Template.jsp",  "#{WORKSPACE}/#{package}/src/jsp/#{application}.jsp"]
+            ].each{ |(a, b)|
+                copy_with_replace(a, b, replacements)
+            }
             block.call(Time.now, package, application, use_base_worker) if block_given?
         end
 

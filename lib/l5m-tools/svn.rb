@@ -39,7 +39,6 @@ module L5MTools
                     rs
                 end
             }, __FILE__, __LINE__
-            puts 
             send(method_id, arguments[0], arguments[1], arguments[2], &block)
         end
         
