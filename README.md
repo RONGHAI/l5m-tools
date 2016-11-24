@@ -4,7 +4,7 @@
 * It includes make-app for creating a new app.
 
 ### Usage
-* first please install svn and git
+* first please install svn, git and ruby
 * please add the following sys env variables
     * WORKSPACE
     * CATALINA_HOME
